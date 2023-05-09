@@ -7,5 +7,5 @@ class Die(models.Model):
     color = models.CharField(max_length=20)
     text_color = models.CharField(max_length=20)
 
-    def __int__(self):
-        return self.sides
+    def __str__(self):
+        return self.text_color

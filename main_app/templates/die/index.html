@@ -5,17 +5,19 @@
 
 {% for d in die %}
 <div class="card">
-    <div class="card-container">
-        <span class="card-title">{{d.name}}</span>
-        <p>Sides: {{d.sides}}</p>
-        {% if d.material == 'Brass' or d.material == 'Wood'%}
-            <p>Material: <strong>{{d.material}}</strong></p>
-        {% else %}
-            <p>Material: {{d.material}}</p>
-        {% endif %}
-        <p>Color: {{d.color}}</p>
-        <p>Text Color: {{d.text_color}}</p>
-    </div>
+    <a href="{% url 'detail' d.id %}">
+        <div class="card-container">
+            <span class="card-title"><i>{{d.text_color}}</i></span>
+            <p>Sides: {{d.sides}}</p>
+            {% if d.material == 'Brass' or d.material == 'Wood'%}
+                <p>Material: <strong>{{d.material}}</strong></p>
+            {% else %}
+                <p>Material: {{d.material}}</p>
+            {% endif %}
+            <p>Color: {{d.color}}</p>
+            <p>Text Color: {{d.text_color}}</p>
+        </div>
+    </a>
 </div>
 {% endfor %}
 {% endblock%}

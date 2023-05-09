@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Die
+from . models import Die
 # Define the home view
 def home(request):
   # Include an .html file extension - unlike when rendering EJS templates
@@ -14,4 +14,10 @@ def die_index(request):
   return render(request, 'die/index.html', {
     'die': die
   })
+
+def die_detail(request, die_id):
+    die = Die.objects.get(id=die_id)
+    return render(request, 'die/detail.html', {
+       'die' : die 
+    })
                 
