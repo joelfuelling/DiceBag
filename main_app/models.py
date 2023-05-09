@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Die(models.Model):
@@ -9,3 +10,8 @@ class Die(models.Model):
 
     def __str__(self):
         return self.text_color
+    
+    # Add this method
+    def get_absolute_url(self):
+        return reverse("detail", kwargs={"die_id": self.id})
+    

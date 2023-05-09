@@ -1,6 +1,7 @@
 from django.shortcuts import render
-
 from . models import Die
+from django.views.generic import ListView, CreateView
+
 # Define the home view
 def home(request):
   # Include an .html file extension - unlike when rendering EJS templates
@@ -17,7 +18,17 @@ def die_index(request):
 
 def die_detail(request, die_id):
     die = Die.objects.get(id=die_id)
-    return render(request, 'die/detail.html', {
+    return render(request, 'main_app/detail.html', {
        'die' : die 
     })
+
+#new code below here
+class DieList(ListView): # our class of DieList is inheriting all of the goodness from that ListView method and...this line of code...#* 'model = Die'
+    model = Die
+
+class DieCreate(CreateView):
+   model = Die
+   fields = '__all__'
+
+
                 
