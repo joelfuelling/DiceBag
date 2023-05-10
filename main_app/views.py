@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from . models import Die
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 # Define the home view
 def home(request):
@@ -10,11 +10,11 @@ def home(request):
 def about(request):
   return render(request, 'about.html')
 
-def die_index(request):
-  die = Die.objects.all()
-  return render(request, 'die/index.html', {
-    'die': die
-  })
+# def die_index(request):
+#   die = Die.objects.all()
+#   return render(request, 'die/index.html', {
+#     'die': die
+#   })
 
 def die_detail(request, die_id):
     die = Die.objects.get(id=die_id)
@@ -27,8 +27,18 @@ class DieList(ListView): # our class of DieList is inheriting all of the goodnes
     model = Die
 
 class DieCreate(CreateView):
-   model = Die
-   fields = '__all__'
+    model = Die
+    fields = '__all__'
 
+class DieUpdate(UpdateView):
+    model = Die
+    fields = '__all__'
+
+class DieDelete(DeleteView):
+    model = Die
+    success_url = '/die'
+
+class DieDetail(DetailView):
+    model = Die
 
                 

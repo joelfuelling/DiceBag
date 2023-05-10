@@ -13,5 +13,5 @@ class Die(models.Model):
     
     # Add this method
     def get_absolute_url(self):
-        return reverse("detail", kwargs={"die_id": self.id})
+        return reverse("die_detail", kwargs={"pk": self.id})
     

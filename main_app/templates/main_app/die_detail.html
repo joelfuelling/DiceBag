@@ -15,6 +15,10 @@
     <p>Color: {{die.color}}</p>
     <p>Text Color: {{die.text_color}}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'die_update' die.id %}">Edit</a>
+    <a href="{% url 'die_delete' die.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}
