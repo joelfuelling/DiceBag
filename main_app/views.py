@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . models import Die
+from .forms import RollsForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 # Define the home view
@@ -41,4 +42,11 @@ class DieDelete(DeleteView):
 class DieDetail(DetailView):
     model = Die
 
+    def get_context_data(self, **kwargs): # Changed from lesson plan!
+        context = super().get_context_data(**kwargs)
+        rolls_form = RollsForm()
+        context['rolls_form'] = rolls_form
+        return context
+
+# ---------- different method below ----------- #* Notice the indent *#
                 
