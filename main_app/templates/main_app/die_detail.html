@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load static %}
 <h1>Dice Details</h1>
 <div class="row">
   <div class="col s6">
@@ -29,6 +29,12 @@
       {{ rolls_form.as_p }}
       <input type="submit" class="btn" value="Add Roll">
     </form>
+    <br>
+    {% if die.rolled_today %}
+      <div class="card-panel teal-text center-align">{{die.color}} has {{die.rolled_today}} rolls today</div>
+    {% else %}
+      <div class="card-panel red-text center-align">{{die.color}} has not been rolled today</div>
+    {% endif %}
     <table class="striped">
       <thead>
         <tr><th>Date</th><th>Result</th></tr>
@@ -44,18 +50,5 @@
     </table>
   </div>
 </div>
-<script>
-  const dateEl = document.getElementById('id_date');
-  // M is Materialize's global variable
-  M.Datepicker.init(dateEl, {
-    format: 'yyyy-mm-dd',
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    autoClose: true
-  });
-
-  // add additional JS to initialize select below
-  const selectEl = document.getElementById('id_result');
-  M.FormSelect.init(selectEl);
-</script>
+<script src={% static 'js/cat_detail.js' %}></script>
 {% endblock %}

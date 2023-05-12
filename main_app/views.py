@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from . models import Die
+from . models import Die, Condition
 from .forms import RollsForm
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.core.validators import MaxValueValidator
+from datetime import date
 
 
 #* I FULLY realize a dice roll should go up to 100... However, for the homework I'm limiting it to 20.
@@ -28,11 +29,25 @@ RESULTS = ( # Constant variable are CAPS as convention in Django. #! WILL NOT CH
     (20, 'Nat 20!'),
 )
 # Create your models here.
+#! BE MINDFUL OF HOW YOU ALTER THIS FROM CATS.
+class Condition(models.Model):
+  name = models.CharField(max_length=50)
+  condition = models.CharField(max_length=20)
+  age = models.IntegerField()
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('condition_detail', kwargs={'pk': self.id})
+
 class Die(models.Model):
     sides = models.IntegerField()
     material = models.CharField(max_length=30)
     color = models.CharField(max_length=20)
     text_color = models.CharField(max_length=20)
+    # Add the M:M relationship
+    chores = models.ManyToManyField(Condition)
 
     def __str__(self):
         return self.text_color
@@ -40,6 +55,10 @@ class Die(models.Model):
     # Add this method
     def get_absolute_url(self):
         return reverse("die_detail", kwargs={"pk": self.id})
+    
+    def rolled_today(self):
+        return self.rolls_set.filter(date=date.today()).count()
+        
     
 class Rolls(models.Model):
     date = models.DateField('Rolled on') # Unfortunately, the Rolls Date field is just a basic text input. This is what Django uses by default for DateFields.
@@ -53,4 +72,6 @@ class Rolls(models.Model):
     def __str__(self):
         return f'{self.get_result_display()} on {self.date}' #? get_result_display() = Magic django method. pulls out the human readable '1', '2', etc., from the choice value
 
+    class Meta:
+        ordering = ['-date']
     
