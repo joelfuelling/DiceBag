@@ -17,11 +17,23 @@ def about(request):
 #     'die': die
 #   })
 
-def die_detail(request, die_id):
-    die = Die.objects.get(id=die_id)
-    return render(request, 'main_app/detail.html', {
-       'die' : die 
-    })
+# def die_detail(request, die_id):
+#     die = Die.objects.get(id=die_id)
+#     return render(request, 'main_app/detail.html', {
+#        'die' : die 
+#     })
+
+def add_result(request, pk):
+    print(request.POST)
+    form = RollsForm(request.POST)
+    if form.is_valid():
+        print("VALID")  
+        new_result = form.save(commit=False) #? This one DOES NOT go to the database.
+        new_result.die_id = pk
+        new_result.save() #? This one goes to the database
+    else:
+        print(form.errors)    
+    return redirect('die_detail', pk=pk)
 
 #new code below here
 class DieList(ListView): # our class of DieList is inheriting all of the goodness from that ListView method and...this line of code...#* 'model = Die'
@@ -48,5 +60,5 @@ class DieDetail(DetailView):
         context['rolls_form'] = rolls_form
         return context
 
-# ---------- different method below ----------- #* Notice the indent *#
+
                 

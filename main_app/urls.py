@@ -9,4 +9,5 @@ urlpatterns = [
   path('die/<int:pk>/', views.DieDetail.as_view(), name='die_detail'),
   path('die/<int:pk>/update/', views.DieUpdate.as_view(), name ='die_update'),
   path('die/<int:pk>/delete/', views.DieDelete.as_view(), name ='die_delete'),
+  path('die/<int:pk>/add_result', views.add_result, name='add_result'),
 ]
