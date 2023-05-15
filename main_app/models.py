@@ -29,6 +29,16 @@ RESULTS = ( # Constant variable are CAPS as convention in Django. #! WILL NOT CH
     (20, 'Nat 20!'),
 )
 # Create your models here.
+#! BE MINDFUL OF HOW YOU ALTER THIS FROM CATS.
+class Condition(models.Model):
+  name = models.CharField(max_length=20)
+  condition = models.CharField(max_length=50)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('condition_detail', kwargs={'pk': self.id})
 
 class Die(models.Model):
     sides = models.IntegerField()
@@ -36,7 +46,8 @@ class Die(models.Model):
     color = models.CharField(max_length=20)
     text_color = models.CharField(max_length=20)
     # Add the M:M relationship
-    chores = models.ManyToManyField(Condition)
+    condition = models.ManyToManyField(Condition, related_name='die_set') # A Die has many conditions 
+    #!- Conditions having Die? No, that would not make sence
 
     def __str__(self):
         return self.text_color
@@ -48,22 +59,7 @@ class Die(models.Model):
     def rolled_today(self):
         return self.rolls_set.filter(date=date.today()).count()
 
-#! BE MINDFUL OF HOW YOU ALTER THIS FROM CATS.
-class Condition(models.Model):
-  name = models.CharField(max_length=50)
-  condition = models.CharField(max_length=20)
-  age = models.IntegerField()
 
-  die = models.ForeignKey(
-     Die,
-     on_delete=models.Cascade
-  )
-
-  def __str__(self):
-    return self.name
-
-  def get_absolute_url(self):
-    return reverse('condition_detail', kwargs={'pk': self.id})
 
     
 class Rolls(models.Model):

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Condition Details</h1>
+
+<div class="row">
+  <div class="col s6 col-offset-3">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ condition.name }}</span>
+        <p>Condition: {{ condition.condition }}</p> 
+        {% comment %} !Is the above line OK...? {% endcomment %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'condition_update' condition.id %}">Edit</a>
+        <a href="{% url 'condition_delete' condition.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

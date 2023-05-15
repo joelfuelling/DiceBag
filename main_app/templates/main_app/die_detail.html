@@ -50,5 +50,54 @@
     </table>
   </div>
 </div>
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ die.text_color }}'s Conditions</h3>
+    {% if die.condition.count %}
+      {% for c in die.condition.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <span style="color: {{ c.color }}">{{ c.color }}</span> {{ c.name }}
+            </span>
+          </div>
+          <div class="card-actions">
+            <form action="{% url 'remove_condition' die.id c.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{die.color}} has no Conditions <img class="thumb" src="https://em-content.zobj.net/thumbs/120/sony/336/thumbs-up_1f44d.png" alt=""></h5>
+    {% endif %}
+  </div>
+<div class="col s6">
+  <h3>Available Conditions</h3>
+  {% if conditions_die_doesnt_have.count %}
+    {% for c in conditions_die_doesnt_have.all %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            <span>{{c.name}}</span>
+          </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'assoc_condition' die.id c.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn">Add</button>
+          </form>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+      <h5>{{die.color}} Already Has All Conditions</h5>
+  {% endif %}
+  </div>
+</div>
+<!-- Available toys will come after this line -->
+
 <script src={% static 'js/cat_detail.js' %}></script>
 {% endblock %}
